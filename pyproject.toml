@@ -1,0 +1,13 @@
+[project]
+name = "correlation-models"
+version = "0.1.0"
+description = "Dependence measures beyond Pearson correlation, with benchmarks"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "scikit-learn>=1.5",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: correlation-models
+Version: 0.1.0
+Summary: Dependence measures beyond Pearson correlation, with benchmarks
+Requires-Python: >=3.11
+Requires-Dist: numpy>=1.26
+Requires-Dist: scipy>=1.13
+Requires-Dist: scikit-learn>=1.5
