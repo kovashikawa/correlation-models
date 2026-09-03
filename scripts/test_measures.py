@@ -24,27 +24,48 @@ def _xi_reference(x: np.ndarray, y: np.ndarray) -> float:
     return 1.0 - a1 / cu
 
 
+def _xi_closed_form(x: np.ndarray, y: np.ndarray) -> float:
+    """Chatterjee (2021), eq. 1.1: xi = 1 - 3 * sum |r_{i+1} - r_i| / (n^2 - 1),
+    valid when X and Y have no ties."""
+    n = x.size
+    rx = rankdata(x, method="average")
+    ry = rankdata(y, method="average")
+    r_sorted = ry[np.argsort(rx, kind="stable")]
+    num = np.sum(np.abs(r_sorted[1:] - r_sorted[:-1]))
+    return 1.0 - 3.0 * num / (n * n - 1)
+
+
 def test_chatterjee_against_reference() -> None:
     rng = np.random.default_rng(0)
 
-    # No ties: must match the reference (and the paper's closed form).
+    # No ties: must match the XICOR reference and the paper's closed form.
     x = rng.normal(size=2_000)
     y = x + 0.5 * rng.normal(size=2_000)
     mine = m.chatterjee_xi(x, y)
     ref = _xi_reference(x, y)
-    assert abs(mine - ref) < 1e-9, f"no-tie mismatch: {mine} vs {ref}"
+    assert abs(mine - ref) < 1e-12, f"XICOR mismatch: {mine} vs {ref}"
+    closed = _xi_closed_form(x, y)
+    assert abs(mine - closed) < 1e-12, f"closed-form mismatch: {mine} vs {closed}"
 
     # Heavy ties in y (integer grid): xicor must match as well.
     x_ties = rng.normal(size=2_000)
     y_ties = np.round(x_ties + 0.5 * rng.normal(size=2_000), 0)
     mine = m.chatterjee_xi(x_ties, y_ties)
     ref = _xi_reference(x_ties, y_ties)
-    assert abs(mine - ref) < 1e-9, f"tie mismatch: {mine} vs {ref}"
+    assert abs(mine - ref) < 1e-12, f"tie mismatch: {mine} vs {ref}"
 
     # Deterministic function: xi approaches 1 (finite-sample max is
     # (n-2)/(n+1), so use a large n for a tight bound).
     xd = rng.normal(size=5_000)
     assert m.chatterjee_xi(xd, np.abs(xd)) > 0.995
+
+    # Under independence, finite-sample xi is small and can be negative;
+    # it must not be clipped to [0, 1].
+    xi_ind = m.chatterjee_xi(rng.normal(size=2_000), rng.normal(size=2_000))
+    assert abs(xi_ind) < 0.05, f"xi(independent) off: {xi_ind}"
+
+    # Constant y: undefined (0/0), must be NaN, not 1.
+    assert np.isnan(m.chatterjee_xi(x, np.ones_like(x)))
 
 
 def test_distance_correlation_known_cases() -> None:

@@ -61,8 +61,11 @@ def _rankdata_max(x: np.ndarray) -> np.ndarray:
 def chatterjee_xi(x: np.ndarray, y: np.ndarray) -> float:
     """Chatterjee (2021) rank correlation coefficient.
 
-    xi = 0 iff X and Y are independent, xi = 1 iff Y is a measurable
-    function of X. Asymmetric: measures Y as a function of X.
+    xi = 0 iff X and Y are independent (for non-constant Y), xi = 1 iff
+    Y is a measurable function of X. Asymmetric: measures Y as a function
+    of X. Returns NaN when Y is (almost surely) constant, where xi is
+    undefined (0/0). Finite-sample values under independence are
+    legitimately negative; we return the raw value, as XICOR does.
 
     Implementation mirrors the canonical XICOR (Chatterjee and Holmes)
     estimator: order observations by x (average-rank tie-break), compute
@@ -75,7 +78,7 @@ def chatterjee_xi(x: np.ndarray, y: np.ndarray) -> float:
     if n < 2:
         raise ValueError("need at least 2 samples")
     if np.all(y == y[0]):
-        return 1.0
+        return float("nan")
 
     # Order by x with average-rank tie-breaking (deterministic).
     rx = _rankdata_avg(x)
@@ -91,8 +94,8 @@ def chatterjee_xi(x: np.ndarray, y: np.ndarray) -> float:
     a1 = np.sum(np.abs(fr[1:] - fr[:-1])) / (2.0 * n)
     cu = float(np.mean(gr * (1.0 - gr)))
     if cu <= 0:
-        return 1.0
-    return float(np.clip(1.0 - a1 / cu, 0.0, 1.0))
+        return float("nan")
+    return float(1.0 - a1 / cu)
 
 
 def _double_center(a: np.ndarray) -> np.ndarray:

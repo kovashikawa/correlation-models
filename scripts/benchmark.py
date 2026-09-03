@@ -20,15 +20,15 @@ SEED = 42
 
 def make_datasets(rng: np.random.Generator) -> dict[str, tuple[np.ndarray, np.ndarray]]:
     x = rng.normal(size=N)
-    z = rng.normal(size=N)
+    theta = rng.uniform(0, 2 * np.pi, size=N)
 
     return {
         "linear": (x, 1.5 * x + rng.normal(scale=0.3, size=N)),
         "quadratic": (x, x**2),
         "abs": (x, np.abs(x)),
         "sine": (x, np.sin(4 * x)),
-        "circle": (x, np.sqrt(np.maximum(1 - x**2, 0)) * rng.choice([-1.0, 1.0], size=N)),
-        "xor": (x, np.where(x * z > 0, 1.0, -1.0)),
+        "circle": (np.cos(theta), np.sin(theta)),
+        "cross": (x, x * rng.choice([-1.0, 1.0], size=N)),
         "independent": (rng.normal(size=N), rng.normal(size=N)),
         "heavy_tail": (x, x + rng.standard_t(df=3, size=N) * 0.5),
     }

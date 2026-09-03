@@ -5,7 +5,7 @@ numpy/scipy implementations and a benchmark against classic nonlinear
 counterexamples. Companion repo for the blog post "Measuring Dependence
 Beyond Pearson's rho".
 
-## Measures included
+## Measures covered
 
 | Measure | Detects | Range | Zero iff independent | Key reference |
 |---|---|---|---|---|
@@ -59,9 +59,12 @@ uv run python scripts/benchmark.py
 ```
 
 Runs all measures on eight synthetic datasets (linear, quadratic, absolute
-value, sine, circle, xor, independent, heavy tails) and prints a markdown
-table. The point is visual: Pearson reports ~0 on |X|, circle, xor, and
-quadratic, while every modern measure scores them as dependent.
+value, sine, circle, cross, independent, heavy tails) and prints a markdown
+table. The point is visual: Pearson reports ~0 on |X|, circle, cross, and
+quadratic, while every modern measure scores them as dependent. The "cross"
+dataset is Y = X·W with W a Rademacher sign, a genuine uncorrelated-but-
+dependent pair: Pearson and Spearman are ~0 because of sign symmetry, while
+xi and distance correlation flag the dependence.
 
 ## Notes on the measures
 
@@ -91,10 +94,12 @@ selection (Song et al. 2012).
 ### KSG mutual information (Kraskov, Stogbauer, Grassberger 2004)
 
 k-nearest-neighbor estimator of mutual information, adaptive resolution in
-both margins. I(X; Y) = 0 iff independence. Values are in bits and depend on
+both margins. I(X; Y) = 0 iff independence. Values are in nats and depend on
 the marginal entropies, so it is a poor cross-dataset comparability measure
 but an excellent detector. scikit-learn exposes it as
-`mutual_info_regression`.
+`mutual_info_regression` (returns nats). Note that for noiseless functional
+relationships, true MI is infinite and the estimate grows with n, so treat
+the functional-column values as detector signals, not calibrated strengths.
 
 ### MIC (Reshef et al. 2011)
 
@@ -137,7 +142,7 @@ the empirical version at a chosen quantile.
    sets. Science.
 7. Kinney, J. B. and Atwal, G. S. (2014). Equitability, mutual information,
    and the maximal information coefficient. PNAS.
-8. Joe, H. (1993). Multivariate models and dependence concepts. Chapman and
+8. Joe, H. (1997). Multivariate models and dependence concepts. Chapman and
    Hall.
 9. Song, L., Smola, A., Gretton, A., Bedo, J., and Borgwardt, K. (2012).
    Feature selection via dependence maximization. JMLR.
