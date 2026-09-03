@@ -128,24 +128,13 @@ the empirical version at a chosen quantile.
 
 ## References
 
-1. Szekely, G. J., Rizzo, M. L., and Bakirov, N. K. (2007). Measuring and
-   testing dependence by correlation of distances. Annals of Statistics.
-2. Szekely, G. J. and Rizzo, M. L. (2009). Brownian distance covariance.
-   Annals of Applied Statistics.
-3. Chatterjee, S. (2021). A new coefficient of correlation. Journal of the
-   American Statistical Association.
-4. Gretton, A., Bousquet, O., Smola, A., and Scholkopf, B. (2005). Measuring
-   statistical dependence with Hilbert-Schmidt norms. ALT.
-5. Kraskov, A., Stogbauer, H., and Grassberger, P. (2004). Estimating mutual
-   information. Physical Review E.
-6. Reshef, D. N. et al. (2011). Detecting novel associations in large data
-   sets. Science.
-7. Kinney, J. B. and Atwal, G. S. (2014). Equitability, mutual information,
-   and the maximal information coefficient. PNAS.
-8. Joe, H. (1997). Multivariate models and dependence concepts. Chapman and
-   Hall.
-9. Song, L., Smola, A., Gretton, A., Bedo, J., and Borgwardt, K. (2012).
-   Feature selection via dependence maximization. JMLR.
-10. Edelmann, D., Móri, T. F., and Székely, G. J. (2021). On relationships
-    between the Pearson and the distance correlation coefficients. Statistics
-    and Probability Letters.
+1. Szekely, G. J., Rizzo, M. L., and Bakirov, N. K. (2007). [Measuring and testing dependence by correlation of distances](https://projecteuclid.org/journals/annals-of-statistics/volume-35/issue-6/Measuring-and-testing-dependence-by-correlation-of-distances/10.1214/009053607000000505.full). Annals of Statistics.
+2. Szekely, G. J. and Rizzo, M. L. (2009). [Brownian distance covariance](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-3/issue-4/Brownian-distance-covariance/10.1214/09-AOAS312.full). Annals of Applied Statistics.
+3. Chatterjee, S. (2021). [A new coefficient of correlation (PDF)](https://arxiv.org/pdf/1909.10140). Journal of the American Statistical Association.
+4. Gretton, A., Bousquet, O., Smola, A., and Scholkopf, B. (2005). [Measuring statistical dependence with Hilbert-Schmidt norms (PDF)](http://alex.smola.org/papers/2005/GreBouSmoSch05.pdf). ALT.
+5. Kraskov, A., Stogbauer, H., and Grassberger, P. (2004). [Estimating mutual information (PDF)](https://arxiv.org/pdf/cond-mat/0305641). Physical Review E.
+6. Reshef, D. N. et al. (2011). [Detecting novel associations in large data sets](https://www.science.org/doi/10.1126/science.1205438). Science.
+7. Kinney, J. B. and Atwal, G. S. (2014). [Equitability, mutual information, and the maximal information coefficient](https://www.pnas.org/doi/10.1073/pnas.1309933111). PNAS.
+8. Joe, H. (1997). [Multivariate models and dependence concepts](https://doi.org/10.1201/b13150). Chapman and Hall.
+9. Song, L., Smola, A., Gretton, A., Bedo, J., and Borgwardt, K. (2012). [Feature selection via dependence maximization (PDF)](https://www.jmlr.org/papers/volume13/song12a/song12a.pdf). JMLR.
+10. Edelmann, D., Móri, T. F., and Székely, G. J. (2021). [On relationships between the Pearson and the distance correlation coefficients](https://doi.org/10.1016/j.spl.2020.108960). Statistics and Probability Letters.
